@@ -1,4 +1,0 @@
-#!/bin/bash
-service httpd start
-cd /home/ec2-user/rv
-npm run build
