@@ -1,0 +1,1063 @@
+<template>
+    <!-- Contests-New Tab -->
+
+
+    <div style="background-color: #f7f7f7;">
+
+        <div class="col" style="background-color: #f7f7f7;">
+
+            <div class="box shadow">
+
+                <div class="">
+                    <text class="tbl-rewards-heading" style="padding-left:10px">Digital East Contest (1st to 30th June)</text>
+                </div>
+
+                <div class="card-rewards shadow">
+                    <scroller class="joinclubs-srce" scroll-direction="horizontal">
+                        <div class="table-row mobile-row table-width" style="flex-direction:column;">
+                            <div class="thead-row hide-small-dev" style="flex-direction:row; flex-wrap: nowrap;background-color:#ebebeb">
+                                <div class="join-tbl-col-1"> <text class="tbl-rewards-heading">Rank</text></div>
+                                <div class="join-tbl-col-2"> <text class="tbl-rewards-heading">Name</text></div>
+                                <div class="join-tbl-col-3"> <text class="tbl-rewards-heading">Score</text></div>
+                                <div class="join-tbl-col-4"> <text class="tbl-rewards-heading">Stats</text></div>
+                                <div class="join-tbl-col-5"> <text class="tbl-rewards-heading">Information</text></div>
+                                <div class="join-tbl-col-6"> <text class="tbl-rewards-heading">Rewards</text></div>
+                            </div>
+
+                            <div class="tbody-row" v-for="tbl in table" style="flex-direction:row;flex:1;flex-wrap: nowrap;overflow: auto">
+                                <div style="justify-content: center; padding-left:6px;" class="join-tbl-col-1">
+                                     <text class="form-rewards-title">{{tbl.position}}</text>
+                                     </div>
+                                <div style="justify-content: center; padding-left:6px;" class="join-tbl-col-2"> 
+                                    <text class="form-rewards-title">{{tbl.name}}</text>
+                                    </div>
+                                <div style="justify-content: center;padding-left:8px;" class="join-tbl-col-3">
+                                     <text class="form-rewards-title">{{tbl.rank}}</text>
+                                     </div>
+                                <div class="join-tbl-col-4" style="justify-content: center;flex-direction:column;padding-left: 8px; paddng-top:10px;">
+                                    <div style="margin-top:10px" >
+                                        <wxc-progress :value="tbl.value" :bar-height=16 :bar-width=100></wxc-progress>
+                                    </div>
+                                    <div style="margin-top:10px">
+                                        <wxc-progress :value="tbl.value1" :bar-height=16 :bar-width=100></wxc-progress>
+                                    </div>
+                                </div>
+                                <div style="justify-content: center" class="join-tbl-col-5"> 
+                                    <text class="form-rewards-title">Logins:{{tbl.logins}}</text>
+                                    <text class="form-rewards-title">Issuance:{{tbl.issuance}}</text>
+                                </div>
+                                <div class="box md-btn-width">
+                                    <!-- <div v-if="platform === 'Web'" @click.native="jump('/mastercontests/rewards')" class="md-custom-btn btn-color">
+                        
+                                    <text class="md-btn-label ">View Rewards</text>
+                                </div>
+                                <div v-if="platform !== 'Web'"  @click="jump('/mastercontests/rewards')" class="md-custom-btn btn-color">
+                        
+                                        <text class="md-btn-label ">View Rewards</text>
+                                    </div> -->
+                                    <div v-if="platform === 'Web'" style="padding-top:10px;padding-right:10px;padding-bottom:10px;" class="joinclubs-tab-button-width join-tbl-col-6" @click.native="jump('/mastercontests/rewards')">
+                                        <vx-primary-btn class="cursor-pointer-globle" btn-name="View Rewards" btn-icon="https://www.materialui.co/materialIcons/content/add_circle_outline_white_192x192.png">
+                                        </vx-primary-btn>
+
+                                    </div>
+                                    <div v-if="platform !== 'Web'" style="" class="" @click="jump('/mastercontests/rewards')">
+                                        <vx-primary-btn class="cursor-pointer-globle join-tbl-col-6" btn-name="View Rewards" btn-icon="https://www.materialui.co/materialIcons/content/add_circle_outline_white_192x192.png">
+                                        </vx-primary-btn>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <!--<div class="card-rewards-btn"><text class="card-rewards-btn-text">&#x27a4;Share with an Advisor</text></div>-->
+                    </scroller>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <!-- </scroller> -->
+
+</template>
+
+<script>
+    const navigator = weex.requireModule('navigator');
+    import {
+        WxcProgress
+    } from 'weex-ui'
+    import vxPrimaryBtn from '../../components/vx-primary-button/vx-primary-button.vue'
+    import contestsTab from './ContestTab.vue'
+    const invalid = '- invalid -'
+    export default {
+        created() {
+            if (typeof WXEnvironment === 'object') {
+
+                this.platform = WXEnvironment.platform || unknown
+                this.deviceWidth = WXEnvironment.deviceWidth || unknown
+                return this.platform
+            }
+        },
+        props: {
+            listItems: {
+                type: Array
+            }
+
+        },
+        components: {
+            contestsTab,
+            WxcProgress,
+            vxPrimaryBtn
+        },
+        data: function() {
+            return {
+                headerName: 'Contests',
+                platform: invalid,
+                deviceWidth: invalid,
+                rewards: true,
+                rewards1: false,
+                // value: 80,
+                uploading: false,
+                progressVisible: false,
+                timer: null,
+                table: [{
+                    position: '1st',
+                    name: 'Shashank Milttal',
+                    rank: 1827,
+                    logins: 1600,
+                    issuance: 1534,
+                    value: 30,
+                    value1: 50
+
+                }, {
+                    position: '1st',
+                    name: 'Shashank Milttal',
+                    rank: 1827,
+                    logins: 1600,
+                    issuance: 1534,
+                    value: 30,
+                    value1: 50
+
+                }, {
+                    position: '1st',
+                    name: 'Shashank Milttal',
+                    rank: 1827,
+                    logins: 1600,
+                    issuance: 1534,
+                    value: 30,
+                    value1: 50
+
+                }, {
+                    position: '1st',
+                    name: 'Shashank Milttal',
+                    rank: 1827,
+                    logins: 1600,
+                    issuance: 1534,
+                    value: 30,
+                    value1: 50
+
+                }, {
+                    position: '1st',
+                    name: 'Shashank Milttal',
+                    rank: 1827,
+                    logins: 1600,
+                    issuance: 1534,
+                    value: 30,
+                    value1: 50
+
+                }, {
+                    position: '1st',
+                    name: 'Shashank Milttal',
+                    rank: 1827,
+                    logins: 1600,
+                    issuance: 1534,
+                    value: 30,
+                    value1: 50
+
+                }, {
+                    position: '1st',
+                    name: 'Shashank Milttal',
+                    rank: 1827,
+                    logins: 1600,
+                    issuance: 1534,
+                    value: 30,
+                    value1: 50
+
+                }, ],
+                numArray: [{
+                        contnm: 'Contest No. 2 ( 20th May - 20th June )',
+                        listdesc1: 'A Head to Head between the regions, win the privilege to be the “Pride of Digital East Regions” ',
+                        listdesc2: 'And your Rival??? Unlock the secret rival of your region by completing 80% of Sales Assist installation by the SMs of the region',
+                        listdesc3: 'Till you unlock your secret Rival, it’s playing blind!!!',
+                        value: "80",
+                        row: false,
+                    }, {
+                        contnm: 'Contest 2 (1st to 30th June)',
+                        listdesc1: 'A Head to Head between the regions, win the privilege to be the “Pride of Digital East Regions” ',
+                        listdesc2: 'And your Rival??? Unlock the secret rival of your region by completing 80% of Sales Assist installation by the SMs of the region',
+                        listdesc3: 'Till you unlock your secret Rival, it’s playing blind!!!',
+                        value: "30",
+                        row1: false,
+
+                    }, {
+                        contnm: 'Contest 2 (10th to 15th Aug)',
+                        listdesc1: 'A Head to Head between the regions, win the privilege to be the “Pride of Digital East Regions” ',
+                        listdesc2: 'And your Rival??? Unlock the secret rival of your region by completing 80% of Sales Assist installation by the SMs of the region',
+                        listdesc3: 'Till you unlock your secret Rival, it’s playing blind!!!',
+                        value: "50",
+                        row: false,
+                    }, {
+                        contnm: 'Contest 3 (16th to 18th Nov)',
+                        listdesc1: 'A Head to Head between the regions, win the privilege to be the “Pride of Digital East Regions” ',
+                        listdesc2: 'And your Rival??? Unlock the secret rival of your region by completing 80% of Sales Assist installation by the SMs of the region',
+                        listdesc3: 'Till you unlock your secret Rival, it’s playing blind!!!',
+                        value: "40",
+                        row: false,
+                    },
+
+                ]
+
+
+            }
+        },
+
+        methods: {
+            contestTab(i) {
+                console.log(i)
+                switch (i) {
+                    case 0:
+
+                        for (let i = 0; i < this.numArray.length; i++) {
+                            if (i == 0) {
+                                this.rewards = true;
+                                this.rewards1 = false;
+                                this.numArray[i].row = true
+                                    // this.tabs[i].rewards = true;
+
+                                // me.$router.push('/master/testapp');
+
+
+                            } else {
+                                this.numArray[i].row = false;
+                            }
+                        }
+                        break;
+                    case 1:
+
+                        for (let i = 0; i < this.numArray.length; i++) {
+                            if (i == 1) {
+                                this.rewards = false;
+                                this.rewards1 = !this.rewards1
+
+                                this.numArray[i].row = false;
+                                this.numArray[i].row = !this.numArray[i].row
+                                    // me.$router.push('/master/testpro/proposalpersonal') ;
+                            }
+                            // else {
+                            this.numArray[i].row = false
+                                // }
+                        }
+
+
+
+                        break;
+                        // case 2:
+                        // for(let i=0 ; i < this.tabs.length; i++) {
+                        //     if(i == 2) {
+                        // this.numArray[i].row = !this.numArray[i].row
+                        //     }
+                        //     else {
+                        // this.numArray[i].row = false
+                        //     }
+                        // }
+
+                        // break;
+                        // case 3:
+                        // for(let i=0 ; i < this.tabs.length; i++) {
+                        //     if(i == 3) {
+                        //         this.tabs[i].rewards = true;
+                        //         this.tabs[i].bgColor = '#3d3bee';
+                        //         this.tabs[i].icon = this.tabs[i].whiteIcon;
+                        //         this.tabs[i].color = '#fff',
+                        //         me.$router.push(this.tabs[i].link);
+                        //         // me.$router.push('/master/payment') 
+                        //     }
+                        //     else {
+                        //         this.tabs[i].rewards = false;
+                        //         this.tabs[i].bgColor = '#fff'
+                        //          this.tabs[i].icon = this.tabs[i].blackIcon;
+                        //          this.tabs[i].color = '#000000'
+                        //     }
+                        // }
+
+                        // break;
+
+
+
+                        // case 7:
+                        // for(let i=0 ; i < this.tabs.length; i++) {
+                        //     if(i == 7) {
+                        //           this.tabs[i].rewards = true;
+                        //         this.tabs[i].bgColor = '#3d3bee';
+                        //         this.tabs[i].icon = this.tabs[i].whiteIcon;
+                        //         this.tabs[i].color = '#fff',
+                        //         me.$router.push(this.tabs[i].link);
+                        //         // me.$router.push('/testpro/proposaldeclaration')  
+                        //     }
+                        //     else {
+                        //         this.tabs[i].rewards = false;
+                        //         this.tabs[i].bgColor = '#fff'
+                        //          this.tabs[i].icon = this.tabs[i].blackIcon;
+                        //          this.tabs[i].color = '#000000'
+                        //     }
+                        // }
+
+                        // break;
+                        // case 8:
+                        // for(let i=0 ; i < this.tabs.length; i++) {
+                        //     if(i == 8) {
+                        //         this.tabs[i].rewards = true;
+                        //         this.tabs[i].backgroundColor = '#fff'
+                        //         this.tabs[i].borderBottomWidth= '5px',
+                        //         this.tabs[i].borderBottomColor= '#3b371e'
+                        //         me.$router.push('/testpro/proposalreport')   
+                        //     }
+                        //     else {
+                        //         this.tabs[i].rewards = false;
+                        //         this.tabs[i].backgroundColor = ''
+                        //     this.tabs[i].borderBottomWidth= '',
+                        //     this.tabs[i].borderBottomColor= ''
+                        //     }
+                        // }
+
+                        break;
+
+                        break
+                    default:
+                        // execute default code block
+                }
+            },
+            jump(to) {
+                if (this.$router) {
+                    this.$router.push(to)
+                }
+            },
+            gotoJump() {
+                navigator.push({
+                    url: createURL('/p-rewards'),
+                    animated: 'true'
+                })
+            }
+
+        }
+
+    }
+</script>
+
+<style>
+    /* Customize table */
+    
+    .table-width {
+        width: 1200px;
+    }
+    
+    .join-tbl-col-1 {
+        width: 100px;
+    }
+    
+    .join-tbl-col-2 {
+        width: 250px;
+    }
+    
+    .join-tbl-col-3 {
+        width: 150px;
+    }
+    
+    .join-tbl-col-4 {
+        width: 150px;
+    }
+    
+    .join-tbl-col-5 {
+        width: 200px;
+    }
+    
+    .join-tbl-col-6 {
+        width: 300px;
+    }
+    /*  */
+    
+    .joinclubs-srce {
+        flex-direction: row;
+    }
+    
+    .robotoregular {
+        font-family: robotoregular;
+    }
+    
+    .robotobold {
+        font-family: robotobold;
+    }
+    
+    .reward-header {
+        background-color: #ebebeb;
+        padding: 10px;
+    }
+    
+    .reward-icon {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .card-rewards {
+        flex-direction: column;
+        /* width: 100%; */
+    }
+    
+    .thead-row {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+    }
+    
+    .form-rewards-title {
+        font-size: 24px;
+        padding-top: 10px;
+        color: #9d9d9d;
+        font-family: robotoregular;
+    }
+    
+    .tbl-rewards-heading {
+        font-size: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-family: robotobold;
+    }
+    
+    .thead-row {
+        flex-direction: column;
+    }
+    
+    .tbody-row {
+        flex-direction: column
+    }
+    /* .md-btn-width {
+        width: 20%;
+    } */
+    
+    .md-custom-btn {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 2px;
+        height: 40px;
+        min-width: 88px;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .md-btn-label {
+        color: #fff;
+        font-size: 11px;
+        text-transform: uppercase;
+        font-weight: 500;
+        cursor: pointer;
+        font-family: robotoregular;
+    }
+    
+    .btn-color {
+        background-color: #3b371e;
+    }
+    
+    .col {
+        display: flex;
+        flex-direction: column;
+        background-color: #e0e2e5;
+    }
+    
+    .row {
+        display: flex;
+        flex-direction: row;
+        background-color: #e0e2e5;
+    }
+    
+    .card-rewards {
+        background-color: #ffffff;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        margin: 10px;
+        justify-content: center;
+    }
+    /* Button CSS */
+    
+    .card-btn {
+        justify-content: center;
+        align-items: center;
+        border-radius: 2px;
+        height: 50px;
+        min-width: 90px;
+        position: relative;
+        cursor: pointer;
+        padding-left: 4px;
+        padding-right: 10px;
+        margin-right: 10px;
+        margin-bottom: 3px;
+        background-color: rgb(33, 34, 35);
+    }
+    
+    .card-btn-text {
+        font-size: 17px;
+        text-transform: uppercase;
+        font-weight: 500;
+        cursor: pointer;
+        color: whitesmoke;
+        font-family: robotoregular;
+    }
+    
+    .card-btn:active {
+        background-color: rgb(5, 4, 4);
+    }
+    /* .img-share
+{
+    width:55px;
+    height:40px ;
+} */
+    /* @@ */
+    /* Text CSS */
+    
+    .heading {
+        font-size: 25px;
+        padding-top: 5px;
+        font-weight: bold;
+        font-family: robotoregular;
+    }
+    
+    .text1 {
+        font-weight: bold;
+        font-size: 25px;
+        font-family: robotoregular;
+    }
+    
+    .text2 {
+        display: flex;
+        color: #6e6d6d;
+        font-size: 24px;
+        padding: 3px 7px 2px 9px;
+        font-family: robotoregular;
+    }
+    
+    .text3 {
+        color: #6e6d6d;
+        font-size: 25px;
+        font-weight: bold;
+        padding-left: 9px;
+        padding-bottom: 4px;
+        font-family: robotoregular;
+    }
+    
+    .shadow {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+    }
+    
+    .topheader {
+        font-size: 25px;
+        padding-left: 15px;
+        padding-top: 20px;
+        font-weight: bold;
+        color: #949494;
+        font-family: robotoregular;
+    }
+    /* @@ */
+    /* header box CSS */
+    
+    .tab-box-padding {
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        margin-right: 40px;
+    }
+    
+    .tab-box-padding1 {
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        margin-right: 40px;
+        margin-left: 60px;
+    }
+    
+    .img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .tab-text-font-size {
+        font-size: 30px;
+        font-family: robotoregular;
+    }
+    
+    .tab-flex-row3 {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    /* @@ */
+    
+    .row-simple {
+        display: flex;
+        flex-direction: row;
+        background-color: white;
+        padding-bottom: 10px;
+        padding-top: 3px;
+    }
+    
+    .col-simple {
+        display: flex;
+        flex-direction: column;
+        background-color: #e0e2e5;
+    }
+    
+    .list-item-padding {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .mouse-pointer {
+        cursor: pointer;
+    }
+    
+    .filter-label-text {
+        color: #9d9d9d;
+        font-size: 12px;
+        font-family: robotoregular;
+    }
+    
+    .headspace {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 5px;
+        font-size: 15px;
+        font-weight: 600;
+        font-family: robotoregular;
+    }
+    
+    .row1 {
+        display: flex;
+        flex-direction: row;
+        background-color: rgb(224, 226, 229);
+    }
+    
+    .select {
+        border-bottom: 3px solid;
+        display: inline-table;
+        background-color: white;
+        width: 110px;
+        border-width: 1px;
+        border-color: #f4f5f7;
+        margin-left: 8px;
+        padding-top: 19px;
+        padding-bottom: 10px;
+        color: black;
+    }
+    
+    .selectbor {
+        border-bottom: 2px solid;
+        display: inline-table;
+    }
+    
+    .row-type {
+        padding-right: 27px;
+        background-color: white;
+        padding-bottom: 4px;
+        padding-top: 4px;
+    }
+    
+    .flex-row-to-column-360 {
+        flex-direction: column;
+    }
+    
+    .tab-flex-row {
+        flex-direction: row;
+    }
+    
+    .tab-flex-row1 {
+        flex-direction: row;
+    }
+    
+    .tab-font-size {
+        font-size: 25px;
+        font-family: robotoregular;
+    }
+    
+    .tab-box-padding {
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        margin-right: 40px;
+    }
+    
+    .flex-row {
+        flex-direction: column;
+    }
+    
+    .nx-flex-column {
+        flex-direction: column;
+    }
+    
+    .nx-flex-bt-marg {
+        margin-bottom: 20px;
+    }
+    
+    .flex-direction-change {
+        flex-direction: row;
+    }
+    
+    .flex-column {
+        flex-direction: column;
+    }
+    
+    .flex-row {
+        flex-direction: row;
+    }
+    
+    .add-border {
+        border-width: 1px;
+        border-style: solid;
+        border-top-color: #fff;
+        border-right-color: #fff;
+        border-left-color: #fff;
+        border-bottom-color: #e7e7e7;
+    }
+    
+    .add-border1 {
+        border-width: 1px;
+        border-style: solid;
+        border-top-color: #6e6d6d;
+        border-right-color: #6e6d6d;
+        border-left-color: #6e6d6d;
+        border-bottom-color: #6e6d6d;
+    }
+    
+    .box {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .C {
+        flex: 1
+    }
+    
+    .rewards-srce {
+        flex-direction: row;
+    }
+    
+    .joinclubs-tab-button-width {
+        width: 320px;
+    }
+    /* iphone */
+    
+    @media (min-width: 320px) {
+        /* Customize table */
+        .table-width {
+            width: unset;
+        }
+        .join-tbl-col-1 {
+            width: 90px;
+        }
+        .join-tbl-col-2 {
+            width: 200px;
+        }
+        .join-tbl-col-3 {
+            width: 150px;
+        }
+        .join-tbl-col-4 {
+            width: 200px;
+        }
+        .join-tbl-col-5 {
+            width: 180px;
+        }
+        .join-tbl-col-6 {
+            width: 300px;
+        }
+        /*  */
+        .table-width {
+            width: unset;
+        }
+        .joinclubs-tab-button-width {
+            width: 160px;
+        }
+        .md-custom-btn {
+            width: 30%;
+        }
+        .rewards-srce {
+            flex-direction: row;
+        }
+        .card-rewards {
+            flex-direction: column;
+            width: 360px;
+        }
+        .margin-rewards {
+            padding-top: 10px
+        }
+        .form-rewards-title {
+            font-size: 14px;
+            padding-top: 10px;
+            color: #9d9d9d;
+            font-family: robotoregular;
+        }
+        .tbl-rewards-heading {
+            font-size: 15px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-family: robotobold;
+        }
+        .scroller {
+            overflow: auto;
+        }
+        .flex-row {
+            flex-direction: column;
+        }
+        .item-alignment {
+            align-items: left;
+        }
+        .flex-direction-change {
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+        .flex-row-content-hidden {
+            overflow: scroll;
+        }
+        .heading {
+            font-size: 15px;
+            padding-top: 5px;
+            font-weight: bold;
+            font-family: robotoregular;
+        }
+        .text1 {
+            font-weight: bold;
+            font-size: 14px;
+            padding-bottom: 5px;
+            font-family: robotoregular;
+        }
+        .text2 {
+            display: flex;
+            color: #6e6d6d;
+            font-size: 14px;
+            font-family: robotoregular;
+        }
+        .text3 {
+            color: #6e6d6d;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: robotoregular;
+        }
+        .card {
+            background-color: #ffffff;
+            padding-top: 25px;
+            padding-bottom: 25px;
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            margin: 10px;
+            flex: 1
+        }
+        /* .row-simple
+    {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        height: auto;
+        justify-content: start;
+        background-color:white; 
+        padding-bottom:20px; 
+    } */
+    }
+    /* Small Device / Tab */
+    
+    @media (min-width: 768px) {
+        .card-rewards {
+            flex-direction: row;
+            width: 100%;
+        }
+        .margin-rewards {
+            margin-left: 20px
+        }
+        .flex-row {
+            flex-direction: row;
+        }
+        .item-alignment {
+            align-items: left;
+        }
+        .nx-flex-bt-marg {
+            margin-bottom: 10px;
+        }
+        .flex-direction-change {
+            flex-direction: row;
+        }
+        .heading {
+            font-size: 15px;
+            padding-top: 5px;
+            font-weight: bold;
+            font-family: robotoregular;
+        }
+        .text1 {
+            font-weight: bold;
+            font-size: 14px;
+            padding-bottom: 5px;
+            font-family: robotoregular;
+        }
+        .text2 {
+            display: flex;
+            color: #6e6d6d;
+            font-size: 14px;
+            font-family: robotoregular;
+        }
+        .text3 {
+            color: #6e6d6d;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: robotoregular;
+        }
+        .card {
+            background-color: #ffffff;
+            padding-top: 25px;
+            padding-bottom: 25px;
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            margin: 10px;
+        }
+    }
+    /* Medium Device Laptops and Desktops */
+    
+    @media (min-width: 992px) {
+        .flex-row {
+            flex-direction: row;
+        }
+        .nx-flex-column {
+            flex-direction: row;
+        }
+        .outer-flex-col {
+            flex-direction: column;
+        }
+        .tab-flex-row {
+            flex-direction: row;
+        }
+        .tab-flex-row1 {
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+        .tab-font-size {
+            font-size: 25px;
+            font-family: robotoregular;
+        }
+        .nx-flex-bt-padd {
+            padding-bottom: 5px;
+        }
+        .nx-flex-bt-marg {
+            margin-bottom: 10px;
+        }
+        .item-alignment {
+            align-items: left;
+        }
+        .nx-flex-row {
+            flex-direction: column;
+        }
+        .card {
+            background-color: #ffffff;
+            padding-top: 25px;
+            padding-bottom: 25px;
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            margin: 10px;
+        }
+        .box {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .sub-row {
+            flex-direction: row;
+        }
+        .row-simple {
+            display: flex;
+            flex-direction: row;
+            background-color: white;
+            padding-bottom: 6px;
+            padding-top: 3px;
+        }
+        .heading {
+            font-size: 15px;
+            padding-top: 5px;
+            font-weight: bold;
+            font-family: robotoregular;
+        }
+        .text1 {
+            font-weight: bold;
+            font-size: 14px;
+            padding-bottom: 5px;
+            font-family: robotoregular;
+        }
+        .text2 {
+            display: flex;
+            color: #6e6d6d;
+            font-size: 14px;
+            font-family: robotoregular;
+        }
+        .text3 {
+            color: #6e6d6d;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: robotoregular;
+        }
+        .topheader {
+            font-size: 13.5px;
+            padding-left: 15px;
+            padding-top: 20px;
+            font-weight: bold;
+            color: #949494;
+            font-family: robotoregular;
+        }
+        .select {
+            border-bottom: 3px solid;
+            display: inline-table;
+            background-color: white;
+            width: 69px;
+            border-width: 1px;
+            border-color: #f4f5f7;
+            margin-left: 8px;
+            padding-top: 19px;
+            padding-bottom: 10px;
+            color: black;
+        }
+        .img {
+            width: 50px;
+            height: 50px;
+        }
+        /* .img-share
+    {
+        width:35px;
+        height:30px ;
+    } */
+        .selectbor {
+            border-bottom: 2px solid;
+            display: inline-table;
+        }
+    }
+</style>

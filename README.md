@@ -1,35 +1,28 @@
-# rv-poc
 
-This template should help get you started developing with Vue 3 in Vite.
+## Intro
+This branch created for -- JWT intigration in curremt version of SD-admin v-2.0 ,  need to apply JWT in this branch then will merge same to Develop branch.
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
 
-```sh
+
+# student-project
+
+> A Vue.js project
+
+## Build Setup
+
+``` bash
+# install dependencies
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# serve with hot reload at localhost:8080
 npm run dev
-```
 
-### Compile and Minify for Production
-
-```sh
+# build for production with minification
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
